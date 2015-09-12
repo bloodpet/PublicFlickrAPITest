@@ -2,6 +2,7 @@ var app = angular.module('myApp', []).
 config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
         controller: 'SearchController',
+        templateUrl: 'static/partials/search-form.html'
     })
 }]);
 
