@@ -10,7 +10,6 @@ app.controller('SearchController', function($scope, $http) {
     $scope.searchTerm = '';
     $scope.pageTitle = 'All images';
     $scope.search = function() {
-        console.log('Start search for ' + $scope.searchTerm);
         $scope.pageTitle = 'Search for ' + $scope.searchTerm;
     };
 })
