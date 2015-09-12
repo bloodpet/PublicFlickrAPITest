@@ -3,3 +3,9 @@
     <input id="txt-search" placeholder="Search for images" ng-model="searchTerm">
     <input type="submit" value="Submit">
 </form>
+<div ng-repeat="item in items">
+    <a href="{{ item.link }}" target="_blank">
+    <img src="{{ item.media.m }}">
+    </a>
+</div>
+<div ng-include="static/partials/search-results.html" ng-init="search()"></div>
