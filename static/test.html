@@ -4,6 +4,7 @@
   </head>
   <body>
     <div ng-controller="SearchController">
+    <h1>{{ pageTitle }}</h1>
     <form ng-submit="search()">
         <input id="txt-search" placeholder="Search for images" ng-model="searchTerm">
         <input type="submit" value="Submit">
