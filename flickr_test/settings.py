@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_extensions',
     'rest_framework',
+    'django_redis',
     'image_search',
 )
 
@@ -109,3 +110,15 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+REDIS = {
+    'default': {
+        'host': 'cache',
+        'port': 6379,
+    }
+}
+
+try:
+    from .local_settings import *
+except:
+    pass
