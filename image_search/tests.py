@@ -15,3 +15,7 @@ class SearchViewTest(TestCase):
         response = self.client.get('/search')
         self.assertEqual(200, response.status_code)
         self.assertTrue('items' in response.data.keys())
+
+        response = self.client.get('/search?search_term=')
+        self.assertEqual(200, response.status_code)
+        self.assertTrue('items' in response.data.keys())
