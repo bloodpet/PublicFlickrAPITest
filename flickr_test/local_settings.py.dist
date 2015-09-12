@@ -1,0 +1,8 @@
+from .settings import *
+
+REDIS = {
+    'default': {
+        'host': 'localhost',
+        'port': 6379,
+    }
+}
