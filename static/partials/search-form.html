@@ -27,7 +27,7 @@
 <div class="container">
     <div ng-show="!items.length">{{ statusMsg }}</div>
     <div class="row">
-        <div class="col-md-4" ng-repeat="item in items" style="border: 1; border-color: #000000">
+        <div class="col-md-4" ng-repeat="item in items">
             <div ng-bind-html-unsafe="item.description"></div>
             <a href="{{ item.link }}" target="_blank">
             </a>
