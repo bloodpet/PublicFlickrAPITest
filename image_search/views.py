@@ -21,7 +21,15 @@ class SearchViewSet(APIView):
             tags = ','.join(terms.split(' '))
             flickr_url += '&tags=' + tags
         resp = requests.get(flickr_url)
-        items = resp.json()['items']
+        o_items = resp.json()['items']
+        items = []
+        redis = get_connection('default')
+        for item in o_items:
+            pk = item['pk'] = item['link'].replace('https://www.flickr.com/photos/', '').\
+                    replace('/', '-')
+            cnt = redis.get(pk) or 0
+            item['likeCount'] = int(cnt)
+            items.append(item)
         return Response({'items': items})
 
 
@@ -29,7 +37,7 @@ class LikeViewSet(APIView):
 
     def get(self, request, pk):
         redis = get_connection('default')
-        cnt = redis.get(pk)
+        cnt = redis.get(pk) or 0
         return Response({'count': int(cnt)})
 
     def post(self, request, pk):

@@ -8,10 +8,14 @@ config(['$routeProvider', function($routeProvider) {
 }]);
 
 app.controller('SearchController', function($scope, $http) {
+    $scope.disabledLikes = [];
     $scope.items = [];
     $scope.searchTerm = '';
     $scope.pageTitle = 'All images';
+
     $scope.search = function() {
+        $scope.disabledLikes = [];
+        $scope.items = [];
         $scope.statusMsg = 'Searching...'
         if ($scope.searchTerm) {
             $scope.pageTitle = 'Search for ' + $scope.searchTerm;
@@ -32,5 +36,28 @@ app.controller('SearchController', function($scope, $http) {
             $scope.search();
         });
     };
-    $scope.search();
+
+    $scope.like = function(idx) {
+        var pk = $scope.items[idx].pk;
+        $scope.disabledLikes[idx] = true;
+        if ($scope.items[idx].likeCount) {
+            $scope.items[idx].likeCount = $scope.items[idx].likeCount + 1;
+        } else {
+            $scope.items[idx].likeCount = 1;
+        }
+        $http({
+            method: 'POST',
+            url: '/like/' + pk
+        }).success(function(data) {
+        }).error(function(data, status) {
+            console.log(data);
+            console.log(status);
+        });
+    };
+
+    $scope.init = function() {
+        $scope.search();
+    };
+
+    $scope.init();
 })
