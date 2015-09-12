@@ -1,8 +1,9 @@
+import logging
+import requests
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import requests
-import logging
+from .kv_store import get_connection
 
 log = logging.getLogger(__name__)
 
@@ -22,3 +23,16 @@ class SearchViewSet(APIView):
         resp = requests.get(flickr_url)
         items = resp.json()['items']
         return Response({'items': items})
+
+
+class LikeViewSet(APIView):
+
+    def get(self, request, pk):
+        redis = get_connection('default')
+        cnt = redis.get(pk)
+        return Response({'count': int(cnt)})
+
+    def post(self, request, pk):
+        redis = get_connection('default')
+        redis.incr(pk)
+        return Response({'success': True})
