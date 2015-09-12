@@ -12,13 +12,19 @@ app.controller('SearchController', function($scope, $http) {
     $scope.searchTerm = '';
     $scope.pageTitle = 'All images';
     $scope.search = function() {
+        $scope.statusMsg = 'Searching...'
         if ($scope.searchTerm) {
             $scope.pageTitle = 'Search for ' + $scope.searchTerm;
+        } else {
+            $scope.pageTitle = 'All images';
         }
         $http({
             method: 'GET',
             url: '/search?search_term=' + $scope.searchTerm
         }).success(function(data) {
+            if (! data.items.length) {
+                $scope.statusMsg = 'No images found.'
+            }
             $scope.items = data.items;
         }).error(function(data, status) {
             console.log(data);
